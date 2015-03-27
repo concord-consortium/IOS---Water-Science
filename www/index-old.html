@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+jQuery Mobile Cordova starter template
+Bill Zimmer 2014, Adapted from app-o-mat
+-->
+<head>	
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+
+	<title>App-o-Mat</title>
+
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="lib/jquery-mobile/css/jquery.mobile-1.4.0.min.css" />
+	
+	<script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+
+  <body>
+  	
+	
+  	<!-- Begin: Main tweet list view -->
+	<section id="pageTweetList" data-role="page">
+	  <header data-role="header" data-position="fixed">
+	    <h1>Water Science</h1>
+		<a href="#pageSettings" 
+           data-transition="flip" 
+           data-role="button" 
+           data-icon="gear" 
+           data-iconpos="notext" 
+           class="ui-btn-right">Options</a>
+		<a href="#gps" 
+           data-transition="flip" 
+           data-role="button" 
+           class="ui-btn-left">GPS</a>
+      </header>
+	  <div class="content" data-role="content">
+   <ul id="todoItems">
+    </ul>
+        <form type="post" onsubmit="waterScience.saveData(); return false;">
+          <input type="text" name="project" id="project">
+          <input type="hidden" name="contributor" id="contributor" value="contributor">
+          <input type="hidden" name="gpslong" id="gpslong">
+          <input type="hidden" name="gpslat" id="gpslat">
+          <input type="submit" value="Record Data"/>
+        <div>
+        <label for="phosphate">Phosphate:</label>
+    <input type="hidden" name="phosphate" id="phosphate" min="0" max="100" value="50">
+<label for="pH">pH:</label>
+    <input type="hidden" name="pH" id="pH" min="0" max="14" value="7">
+<label for="dissolvedO2">dissolvedO2:</label>
+    <input type="hidden" name="dissolvedO2" id="dissolvedO2" min="0" max="100" value="50">
+<label for="nitrate">nitrate:</label>
+    <input type="hidden" name="nitrate" id="nitrate" min="0" max="100" value="50">
+<label for="coliform">coliform</label>
+    <input type="hidden" name="coliform" id="coliform" min="0" max="100" value="50">
+<label for="turbidity">turbidity</label>
+    <input type="hidden" name="turbidity" id="turbidity" min="0" max="100" value="50">
+<label for="temperature">temperature</label>
+    <input type="hidden" name="temperature" id="temperature" min="0" max="100" value="50">
+<label for="biochemicalO2">biochemicalO2</label>
+    <input type="hidden" name="biochemicalO2" id="biochemicalO2" min="0" max="100" value="50">
+
+        </form>
+        </div>
+ 	  </div>
+	  <footer data-role="footer" data-position="fixed"><h1>O'Reilly <i>jQuery Mobile</i></h1></footer>
+	</section>
+	<!-- End: Main tweet list view -->
+	
+	<!-- Begin: Tweet detail view -->
+	<section id="gps" data-role="page">
+	  <header data-role="header"><h1>GPS</h1></header>
+	  <div class="content" data-role="content">
+			<div id="geolocation"></div>
+		</div>
+	  </div>
+	  <footer data-role="footer"><h1>O'Reilly <i>jQuery Mobile</i></h1></footer>
+	</section>
+	<!-- End: Tweet detail view -->
+	
+	<!-- Begin: Settings page -->
+	<section id="pageSettings" data-role="page">
+	  <header data-role="header"><h1>Water Science</h1></header>
+	  <div class="content" data-role="content">
+		<h3>Settings</h3>
+		<div data-role="fieldcontain">
+          <label for="username">Twitter User Name:</label>
+          <input type="text" id="username" value="">
+        </div>
+        <div data-role="fieldcontain">
+          <label for="slider">Number of tweets to display:</label>
+          <input type="hidden" id="slider" name="slider" min="5" max="50" value="">
+        </div>
+
+	  </div>
+	  <footer data-role="footer"><h1>O'Reilly <i>jQuery Mobile</i></h1></footer>
+	</section>
+	<!-- End: Preferences page -->
+	
+	<a href="#pageError" id="show-error-page" data-role="button" data-rel="dialog" data-transition="pop" style="display: none">Show error page</a>
+
+	<!-- Begin: Error page -->
+	<section id="pageError" data-role="page" data-theme="e">
+	  <header data-role="header"><h1>Water Science</h1></header>
+	  <div class="content" data-role="content">
+	  </div>
+	  <footer data-role="footer"><h1>O'Reilly <i>jQuery Mobile</i></h1></footer>
+	</section>
+	<!-- End: Error page -->
+	
+  </body>
+ 
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/fastclick/js/fastclick.js"></script>
+<script type="text/javascript" src="lib/handlebars/js/handlebars-v1.3.0.js"></script>
+
+<script type="text/javascript">
+try {
+		document.addEventListener('deviceready', waterScience.init, false);
+} catch(err) {alert("HTML - "+err.message);}
+</script>
+
+</body>
+</html>

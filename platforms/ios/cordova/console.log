@@ -1,0 +1,48 @@
+2015-03-22 09:22:22.928 WaterScience[2276:102391] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Data/Application/6CE5C5A0-69A7-4E90-B7A5-E2F7B386F137/Library/Cookies/Cookies.binarycookies
+2015-03-22 09:22:23.616 WaterScience[2276:102391] Apache Cordova native platform version 3.8.0 is starting.
+2015-03-22 09:22:23.617 WaterScience[2276:102391] Multi-tasking -> Device: YES, App: YES
+2015-03-22 09:22:23.651 WaterScience[2276:102391] Unlimited access to network resources
+2015-03-22 09:22:23.686 WaterScience[2276:102391] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+To disable web storage backup to iCloud, set the BackupWebStorage preference to "local" in the Cordova config.xml file
+
+2015-03-22 09:22:24.437 WaterScience[2276:102391] [CDVTimer][file] 57.648003ms
+2015-03-22 09:22:24.438 WaterScience[2276:102391] [CDVTimer][TotalPluginStartup] 57.960987ms
+2015-03-22 09:22:25.780 WaterScience[2276:102391] Resetting plugins due to page load.
+2015-03-22 09:22:27.944 WaterScience[2276:102391] Finished load of: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Bundle/Application/EB8AD55E-5FEF-4040-B715-2B21BE415E67/WaterScience.app/www/index.html
+2015-03-23 15:39:15.088 WaterScience[3128:72628] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Data/Application/D73D2191-C155-42BD-91C4-941731CEC556/Library/Cookies/Cookies.binarycookies
+2015-03-23 15:39:15.210 WaterScience[3128:72628] Apache Cordova native platform version 3.8.0 is starting.
+2015-03-23 15:39:15.211 WaterScience[3128:72628] Multi-tasking -> Device: YES, App: YES
+2015-03-23 15:39:15.243 WaterScience[3128:72628] Unlimited access to network resources
+2015-03-23 15:39:15.257 WaterScience[3128:72628] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+To disable web storage backup to iCloud, set the BackupWebStorage preference to "local" in the Cordova config.xml file
+
+2015-03-23 15:39:15.411 WaterScience[3128:72628] [CDVTimer][file] 22.982001ms
+2015-03-23 15:39:15.411 WaterScience[3128:72628] [CDVTimer][TotalPluginStartup] 23.176968ms
+2015-03-23 15:39:15.798 WaterScience[3128:72628] Resetting plugins due to page load.
+2015-03-23 15:39:16.029 WaterScience[3128:72628] Finished load of: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Bundle/Application/A960E774-CF33-4DFB-B2DD-E4685C8F0A40/WaterScience.app/www/index.html
+2015-03-24 16:18:10.901 WaterScience[3211:58717] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Data/Application/596B860A-3D0A-4050-A0FF-1691D28C36DF/Library/Cookies/Cookies.binarycookies
+2015-03-24 16:18:11.621 WaterScience[3211:58717] Apache Cordova native platform version 3.8.0 is starting.
+2015-03-24 16:18:11.621 WaterScience[3211:58717] Multi-tasking -> Device: YES, App: YES
+2015-03-24 16:18:11.660 WaterScience[3211:58717] Unlimited access to network resources
+2015-03-24 16:18:11.682 WaterScience[3211:58717] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+To disable web storage backup to iCloud, set the BackupWebStorage preference to "local" in the Cordova config.xml file
+
+2015-03-24 16:18:12.411 WaterScience[3211:58717] [CDVTimer][file] 31.706989ms
+2015-03-24 16:18:12.421 WaterScience[3211:58717] [CDVTimer][TotalPluginStartup] 41.831017ms
+2015-03-24 16:18:13.237 WaterScience[3211:58717] Resetting plugins due to page load.
+2015-03-24 16:18:13.887 WaterScience[3211:58717] Finished load of: file:///Users/bill/Library/Developer/CoreSimulator/Devices/61BA00DD-A53A-434B-9611-C1259B11ABC8/data/Containers/Bundle/Application/B31E6CD1-B507-4A3F-96E5-5AAD25D897EE/WaterScience.app/www/index.html
