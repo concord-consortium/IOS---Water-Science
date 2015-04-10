@@ -1,10 +1,27 @@
+function iosalert (msg) {setTimeout(function() {toast(msg)}, 0);};
+function toast (msg){
+	$("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h3>"+msg+"</h3></div>")
+	.css({ display: "block", 
+		opacity: 0.90, 
+		position: "fixed",
+		padding: "7px",
+		"text-align": "center",
+		width: "270px",
+		left: ($(window).width() - 284)/2,
+		top: $(window).height()/2 })
+	.appendTo( $.mobile.pageContainer ).delay( 1500 )
+	.fadeOut( 400, function(){
+		$(this).remove();
+	});
+  }
+
 var waterScience = {
 doGPS: "off",
 doCamera: "on",
 database: "true",
 errorLoc: "",
 context: {contribution_key: null,contributor_name: null,fields: []}, 
-uploadURL: "http://isenseproject.org/api/v1/projects/800/jsonDataUpload",
+uploadURL: "",
 
 init : function () {
 waterScience.errorLoc = "Init";
@@ -15,14 +32,12 @@ waterScience.errorLoc = "Init";
   waterScience.getContext('context', function (result) {
       try {
     if (result != undefined) waterScience.context=JSON.parse(result);
-    alert (JSON.stringify(waterScience.context));
-        var fieldList = "";
-        for (i=0; i<waterScience.context.fields.length; i++) 
-           fieldList += ",F" + waterScience.context.fields[i][1] + " TEXT";
-        waterScience.database.transaction(function(tx) {
-//          alert ("CREATE TABLE IF NOT EXISTS data(ID INTEGER PRIMARY KEY ASC, added_on DATETIME, DATAID TEXT, IMAGEURI TEXT"+fieldList+")");
-          tx.executeSql("CREATE TABLE IF NOT EXISTS data(ID INTEGER PRIMARY KEY ASC, added_on DATETIME, DATAID TEXT, IMAGEURI TEXT"+fieldList+")");
-        });
+    else {
+        waterScience.context.projectNumber = 862;
+        waterScience.context.contribution_key = 1234;
+        waterScience.context.contributor_name = "Water Science";
+    }
+    waterScience.uploadURL = "http://isenseproject.org/api/v1/projects/"+waterScience.context.projectNumber+"/jsonDataUpload"
       waterScience.updateHTML();
       waterScience.reSendData();
 
@@ -36,7 +51,6 @@ waterScience.errorLoc = "Init";
 updateHTML: function () {
   $("#contributionKey").val(waterScience.context.contribution_key);
   $("#contributionName").val(waterScience.context.contributor_name);
-  alert (waterScience.context.contributor_name +"="+ $("#contributionName").val());
   $("#projectNumber").val(waterScience.context.projectNumber);
        var rowOutput="";
    
@@ -50,18 +64,28 @@ updateHTML: function () {
              rowOutput += waterScience.inputHidden(i);
              waterScience.Latitude = waterScience.context.fields[i][1];
              waterScience.doGPS = "on";
+        } else if (waterScience.context.fields[i][3] != null) {
+            rowOutput += waterScience.inputSelect(i);
         } else {
             rowOutput += waterScience.inputText(i);
         }
-//         alert(waterScience.inputText(i));
       }
-      $("#dataFields").html("<table>" + rowOutput + "</table>");
+      $("#dataFields").html("<table><tr><td>Data Set Description</td><td><input type=text id=datasetname></td></tr>" + rowOutput + "</table>");
+},
+
+inputSelect: function (i) {
+    selectList = "";
+    for (x in waterScience.context.fields[i][3]) {
+        selectList += '<option>' + waterScience.context.fields[i][3][x] + '</option>';
+    }
+    return '<tr><td>' + waterScience.context.fields[i][0] + '</td><td><select name="F' + 
+            waterScience.context.fields[i][1]  + '" id="F' + waterScience.context.fields[i][1]+ '">' + selectList + '</select></td></tr>'; 
 },
 
 inputText: function (i){
 waterScience.errorLoc = "inputText";
          return '<tr><td>' + waterScience.context.fields[i][0] + '</td><td>' + 
-		     '<input type="text" name="F' + waterScience.context.fields[i][1]+ 
+		     '<input type="'+waterScience.context.fields[i][2]+'" name="F' + waterScience.context.fields[i][1]+ 
 		     '" id="F' + waterScience.context.fields[i][1]+ '"></td></tr>';
 },
 
@@ -83,8 +107,8 @@ saveData: function () {
 waterScience.errorLoc = "saveData";
 //      if (waterScience.doCamera == "on") {
         navigator.camera.getPicture(onSuccess, function(message) {
-				alert('Failed to get a picture');
-		}, { quality: 50,
+				iosalert('Failed to get a picture');
+		}, { quality: 40,
         destinationType: Camera.DestinationType.FILE_URI });
 
         function onSuccess(imageURI) {
@@ -98,14 +122,13 @@ waterScience.errorLoc = "saveData";
 //      } else {
 //        waterScience.saveLocal ();
 //      } 
-   } catch(err) {alert(err.message);}
+   } catch(err) {iosalert("SaveData -- " + err.message);}
 },
 
 saveGPS:  function(gps) {
 waterScience.errorLoc = "saveGPS";
             $("#F" + waterScience.Longitude).val(gps.coords.longitude);
             $("#F" + waterScience.Latitude).val(gps.coords.latitude);
-//            alert (gps.coords.longitude+"="+gps.coords.latitude);
 			waterScience.saveLocal ();
 },
 
@@ -120,18 +143,20 @@ saveLocal:  function() {
 waterScience.errorLoc = "saveLocal";
          waterScience.database.transaction(function(tx){
            try {
-             var i, fieldList = "added_on,IMAGEURI", dummyValues = "?,?", values=[new Date(), waterScience.imageURI];
+             var i, fieldList = "added_on,IMAGEURI,DATASETNAME", dummyValues = "?,?,?", 
+                    values=[new Date(), waterScience.imageURI, $('#datasetname').val()];
              for (i=0; i<waterScience.context.fields.length; i++) {
                fieldList += ",F" + waterScience.context.fields[i][1];
-               values.push ($("#F"+waterScience.context.fields[i][1]).val());
+               if (waterScience.context.fields[i][2] == "number")
+               values.push ($("#F"+waterScience.context.fields[i][1]).val().replace(/[^\d.-]/g, ''));
+               else values.push ($("#F"+waterScience.context.fields[i][1]).val());
                dummyValues += ",?";
-//               alert ("#F"+waterScience.context.fields[i][1]+"="+$("#F"+waterScience.context.fields[i][1]).val());
              }
              tx.executeSql("INSERT INTO data("+fieldList+") VALUES ("+dummyValues+")",
                  values,
                  onSaved,
                  waterScience.onError);
-           } catch(err) {alert(err.message)};
+           } catch(err) {iosalert("Save Local -- " + err.message)};
          });
 
          function onSaved (tx, results) {
@@ -152,10 +177,9 @@ uploadRemote: function (id) {
                var upload={
                    "contribution_key": waterScience.context.contribution_key,
                    "contributor_name": waterScience.context.contributor_name,
-                   'title': (new Date()).getTime().toString(),
+                   'title': row.DATASETNAME + ' - ' + (new Date()).getTime().toString(),
                    'data': data
                };
-alert(JSON.stringify(upload))
                $.post(waterScience.uploadURL, upload)
                    .done(function(data) {
                      waterScience.database.transaction(function (tx) {
@@ -167,7 +191,7 @@ alert(JSON.stringify(upload))
                          options.fileKey = "upload";
                          options.chunkedMode = false;
                          options.fileName = row.IMAGEURI.substr(row.IMAGEURI.lastIndexOf('/') + 1);
-//                      options.mimeType = "image/jpeg";
+                      options.mimeType = "image/jpeg";
                          options.params = {
                            "contribution_key": waterScience.context.contribution_key,
                            "contributor_name": waterScience.context.contributor_name,
@@ -177,53 +201,79 @@ alert(JSON.stringify(upload))
                          options.headers = {Connection: "Close"};
                          var ft = new FileTransfer();
                          ft.upload(fileEntry.toInternalURL(), encodeURI("http://isenseproject.org/api/v1/media_objects/")
-                                       , function(r) {alert("Saved");}
-                                       , function(error) {alert("fail -> " + error.code + " " + error.source);}
+                                       , function(r) {iosalert("Uploaded");}
+                                       , function(error) {iosalert("Upload Fail -> " + error.code + " " + error.source);}
                                        , options);
-                       } catch(err) {alert(err.message);}
+                       } catch(err) {iosalert(err.message);}
                      }, function (e) {
-                       alert ("File Error - " + e.message);
+                       iosalert ("File Error - " + e.message);
                      }          
                  );
                })
-               .fail(function(data) {alert(data.status);});
+               .fail(function(data) {
+                       if (data.status == 401) iosalert ("Invalid Contributor Code")
+                       else if (data.status == 422) iosalert ("iSense Server Error")
+                       else iosalert("Not Connected (" + data.status +")");
+                   });
              }, waterScience.onError);
            });
 },
 
 updateList: function (){
 waterScience.errorLoc = "updateList";
- try {
    waterScience.database.transaction(function (tx) {
-     tx.executeSql("SELECT * FROM data WHERE DATAID IS NULL ORDER BY DATAID DESC", [], function (tx, results) {
+     tx.executeSql("SELECT * FROM data ORDER BY DATAID DESC", [], function (tx, results) {
+ try {
        var rowOutput = "", i;
        for (i = 0; i < results.rows.length; i++){
          var row = results.rows.item(i);
          var date = new Date(row.added_on);
          var status = "Uploaded";
          if (row.DATAID == null) status = "Pending";
-         rowOutput += "<li>" + (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() +" - "+ status;
+         rowOutput += "<li><a href='javascript:void(0);'onclick='waterScience.showData(" + row.ID +");'>" + 
+         (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + 
+         date.getHours() + ":" + date.getMinutes() +" - "+ status + '</a>';
          // + " [<a href='javascript:void(0);'  onclick='waterScience.deletedata(" + row.ID +");'>Delete</a>]</li>";
        }
        $("#dataHistory").html(rowOutput);
-     }, waterScience.onError);
-   });
- } catch(err) {alert(err.message);}
+ } catch(err) {iosalert("Update List -- " + err.message);}
+     });
+   }, waterScience.onError);
+},
+
+showData: function (id){
+waterScience.errorLoc = "showData";
+   waterScience.database.transaction(function (tx) {
+      tx.executeSql("SELECT * FROM data WHERE ID='"+ id +"'", [], function (tx, results) {
+        try {
+          var data={}, dataHTML=""; 
+          var row = results.rows.item(0);
+          var date = new Date(row.added_on);
+          $("#dataName").html((date.getMonth()+1) + "/" + date.getDate() + 
+          "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes());
+          for (i=0; i<waterScience.context.fields.length; i++) {
+            dataHTML += '<tr><td><b>' + waterScience.context.fields[i][0] + '</b></td><td>' + 
+                          row["F"+waterScience.context.fields[i][1]] + '</td></tr>';
+          }
+          $("#dataValues").html("<table><tr><td><b>Data Set</b></td><td>"+row.DATASETNAME+"</td></tr>" +
+                                 dataHTML + "</table>");
+          $.mobile.changePage($('#data'), {});
+        } catch(err) {alert(err.message);}
+     });
+   }, waterScience.onError);
 },
 
 reSendData: function () {
-   waterScience.errorLoc = "updateList";
+   waterScience.errorLoc = "reSendData";
    waterScience.database.transaction(function (tx) {
      tx.executeSql("SELECT * FROM data WHERE DATAID IS NULL", [], function (tx, results) {
        for (i = 0; i < results.rows.length; i++){
          var row = results.rows.item(i);
-//          $.each(row, function (key, val) {alert("Name="+key);});
-//         alert ("ID=" + row.ID);
          waterScience.uploadRemote (row.ID);
        }
        waterScience.updateList();
-     }, waterScience.onError);
-   });
+     });
+   }, function () {$.mobile.changePage($('#pageSettings'), {});});
 },
 
 deletedata: function(id) {
@@ -236,22 +286,38 @@ deletedata: function(id) {
   
 saveSettings: function (){
 waterScience.errorLoc = "saveSettings";
-  $.get("http://isenseproject.org/api/v1/projects/800", 
+  waterScience.context.contributor_name = $("#contributionName").val();
+  waterScience.context.contribution_key = $("#contributionKey").val();
+  waterScience.context.projectNumber = $("#projectNumber").val();
+  waterScience.uploadURL = "http://isenseproject.org/api/v1/projects/"+waterScience.context.projectNumber+"/jsonDataUpload"
+  waterScience.setContext('context', JSON.stringify(waterScience.context));
+  waterScience.context.projectNumber = $("#projectNumber").val();
+
+  $.get("http://isenseproject.org/api/v1/projects/" + waterScience.context.projectNumber, 
      function(data, status){
+      try {
+       var fieldTypes = ["text","text","number","text","number","number"];
        waterScience.context.fields = [];
        for (i=0; i< data.fields.length; i++ ) {
-          waterScience.context.fields.push([data.fields[i]["name"], data.fields[i]["id"].toString()]);
+          if (data.fields[i]["type"] > 5) data.fields[i]["type"] = 0;
+          waterScience.context.fields.push([data.fields[i]["name"], data.fields[i]["id"].toString(), fieldTypes[data.fields[i]["type"]], data.fields[i]["restrictions"]]);
         }
-        waterScience.setContext('fields', JSON.stringify(waterScience.context.fields));
-    waterScience.context.contribution_key = $("#contributionKey").val();
-    waterScience.context.contributor_name = $("#contributionName").val();
-    waterScience.context.projectNumber = $("#projectNumber").val();
-    alert (waterScience.context.contributor_name);
-    waterScience.setContext('context', JSON.stringify(waterScience.context));
-    waterScience.updateHTML();
-    $.mobile.changePage($('#home'), {
+        var fieldList = "";
+        for (i=0; i<waterScience.context.fields.length; i++) 
+           fieldList += ",F" + waterScience.context.fields[i][1] + " TEXT";
+        if (fieldList != waterScience.context.fieldList) {
+          waterScience.database.transaction(function(tx) {
+            tx.executeSql("DROP TABLE IF EXISTS data");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS data(ID INTEGER PRIMARY KEY ASC, added_on DATETIME, DATAID TEXT, IMAGEURI TEXT, DATASETNAME TEXT"+fieldList+")");
+          });
+          waterScience.context.fieldList = fieldList;
+        }
+        waterScience.setContext('context', JSON.stringify(waterScience.context));
+        waterScience.updateHTML();
+        $.mobile.changePage($('#home'), {
               transition: 'flip',
               reverse: true}); 
+      } catch(err) {alert(err.message)};
   });
 },
 
@@ -281,7 +347,7 @@ waterScience.errorLoc = "getContext";
 },
   
 onError : function (error) {
-        alert("Error="+waterScience.errorLoc + "--" + error.message);
+        iosalert("Error="+waterScience.errorLoc + "--" + error.message);
     },
 };
 

@@ -35,27 +35,56 @@ Bill Zimmer 2015
 		<a href="#history" 
            data-transition="slide" 
            data-role="button" 
-           class="ui-btn-left">Pending</a>
+           class="ui-btn-left">History</a>
       </header>
 	  <div class="content" data-role="content">
         <form type="post" onsubmit="waterScience.saveData(); return false;">
         <div id="dataFields"></div>
 		<input type="submit" value="Record Data"/>
-        <div>
-
         </form>
-        </div>
  	  </div>
 	  <footer data-role="footer" data-position="fixed" data-theme="b">
-	    <h1>Water Science Beta 1.0</h1>
+	    <h1>Water Science Beta 1.2</h1>
 	  </footer>
 	</section>
-	<!-- End: Main list view -->
+	<!-- End: Main  list view -->
 
+	<!-- Begin: Data view -->
+	<section id="data" data-role="page" data-theme="a">
+	  <header data-role="header" data-position="fixed" data-theme="b">
+	    <h1 id=dataName>---</h1>
+		<a href="#pageSettings" 
+           data-transition="flip" 
+           data-role="button" 
+           data-icon="gear" 
+           data-iconpos="notext" 
+           class="ui-btn-right">Options</a>
+		<a onclick="$.mobile.changePage($('#home'), {
+              transition: 'slide',
+              reverse: true})" 
+           data-role="button" 
+           data-icon="home" 
+           data-iconpos="notext" 
+           class="ui-btn-left"></a>
+      </header>
+	  <div class="content" data-role="content">
+         <ul id="dataValues"></ul>
+	  </div>
+      <img style="display:none;width:160px;" id="smallImage" src="" />
+      <input type=submit data-role="button" value=Done onclick="$.mobile.changePage($('#history'), {
+              transition: 'slide',
+              reverse: true})" />
+	  <footer data-role="footer" data-position="fixed" data-theme="b">
+	    <h1>Water Science Beta 1.2</h1>
+	  </footer>
+	</section>
+	<!-- End: Data page -->
+
+    
 	<!-- Begin: History view -->
 	<section id="history" data-role="page" data-theme="a">
 	  <header data-role="header" data-position="fixed" data-theme="b">
-	    <h1>Pending Uploads</h1>
+	    <h1>Data Sets</h1>
 		<a href="#pageSettings" 
            data-transition="flip" 
            data-role="button" 
@@ -77,7 +106,7 @@ Bill Zimmer 2015
           <input type="submit" value="Upload"/>
         </form>
 	  <footer data-role="footer" data-position="fixed" data-theme="b">
-	    <h1>Water Science Beta 1.0</h1>
+	    <h1>Water Science Beta 1.2</h1>
 	  </footer>
 	</section>
 	<!-- End: History page -->
@@ -105,7 +134,7 @@ Bill Zimmer 2015
         </form>
 	  </div>
 	  <footer data-role="footer" data-position="fixed" data-theme="b">
-	    <h1>Water Science Beta 1.0</h1>
+	    <h1>Water Science Beta 1.2</h1>
 	  </footer>
 	</section>
 	<!-- End: Preferences page -->
