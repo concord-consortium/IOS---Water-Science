@@ -49,6 +49,7 @@
 		E2A6E49A0272431BB4FB852F /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAD7AC670B54521830AD6BA /* CDVFile.m */; };
 		ED6ABBBDEA904984BB617836 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC4D3D6FB5FC4FDFAADDC420 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F379DC8E18B44DC7920E8DE8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61C1D3D2206D43BDAEB52385 /* CoreLocation.framework */; };
+		80124F93C79446E4877064E2 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AC950A2252C4CF383C54B4A /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,8 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		EC4D3D6FB5FC4FDFAADDC420 /* ImageIO.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = WaterScience/config.xml; sourceTree = "<group>"; };
+		2AC950A2252C4CF383C54B4A /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "org.apache.cordova.statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		E0352DE5017340B39446E81A /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "org.apache.cordova.statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +253,8 @@
 				4C74B6AE19084AFFAE2DEC96 /* CDVFileTransfer.h */,
 				BC52FB28EFF241119B7FB84C /* CDVLocation.m */,
 				137957F885C4466D827F7B0E /* CDVLocation.h */,
+				2AC950A2252C4CF383C54B4A /* CDVStatusBar.m */,
+				E0352DE5017340B39446E81A /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = WaterScience/Plugins;
@@ -447,6 +452,7 @@
 				56FD03F5DA8045DC9A752D99 /* CDVAssetLibraryFilesystem.m in Sources */,
 				D56D7FD78C2749EB9EDB34A3 /* CDVFileTransfer.m in Sources */,
 				3C3CDC208C4A4BB7B1672BB1 /* CDVLocation.m in Sources */,
+				80124F93C79446E4877064E2 /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
