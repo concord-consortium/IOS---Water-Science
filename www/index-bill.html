@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+Water SCIENCE Application
+Bill Zimmer 2015
+-->
+<head>	
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+
+	<title>Water SCIENCE</title>
+
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="lib/jquery-mobile/css/jquery.mobile-1.4.0.min.css" />
+	
+	<script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+
+  <body>
+ 	
+  	<!-- Begin: Main list view -->
+	<section id="home" data-role="page">
+	  <header data-role="header" data-position="fixed" data-theme="b">
+	    <h1>Water SCIENCE</h1>
+		<a href="#pageSettings" 
+           data-transition="flip" 
+           data-role="button" 
+           data-icon="gear" 
+           data-iconpos="notext" 
+           class="ui-btn-right">Options</a>
+		<a href="#history" 
+           data-transition="slide" 
+           data-role="button" 
+           class="ui-btn-left">History</a>
+      </header>
+	  <div class="content" data-role="content">
+        <form type="post" onsubmit="waterScience.saveData(); return false;">
+        <div id="dataFields"></div>
+		<input type="submit" value="Record Data"/>
+        </form>
+ 	  </div>
+	  <footer data-role="footer" data-position="fixed" data-theme="b">
+	    <h1>Water SCIENCE Monitor</h1>
+	  </footer>
+	</section>
+	<!-- End: Main  list view -->
+
+	<!-- Begin: Data view -->
+	<section id="data" data-role="page" data-theme="a">
+	  <header data-role="header" data-position="fixed" data-theme="b">
+	    <h1 id=dataName>---</h1>
+		<a href="#pageSettings" 
+           data-transition="flip" 
+           data-role="button" 
+           data-icon="gear" 
+           data-iconpos="notext" 
+           class="ui-btn-right">Options</a>
+		<a onclick="$.mobile.changePage($('#home'), {
+              transition: 'slide',
+              reverse: true})" 
+           data-role="button" 
+           data-icon="home" 
+           data-iconpos="notext" 
+           class="ui-btn-left"></a>
+      </header>
+	  <div class="content" data-role="content">
+         <ul id="dataValues"></ul>
+	  </div>
+      <img style="display:none;width:160px;" id="smallImage" src="" />
+      <input type=submit data-role="button" value=Done onclick="$.mobile.changePage($('#history'), {
+              transition: 'slide',
+              reverse: true})" />
+	  <footer data-role="footer" data-position="fixed" data-theme="b">
+	    <h1>Water SCIENCE Monitor</h1>
+	  </footer>
+	</section>
+	<!-- End: Data page -->
+
+    
+	<!-- Begin: History view -->
+	<section id="history" data-role="page" data-theme="a">
+	  <header data-role="header" data-position="fixed" data-theme="b">
+	    <h1>Data Sets</h1>
+		<a href="#pageSettings" 
+           data-transition="flip" 
+           data-role="button" 
+           data-icon="gear" 
+           data-iconpos="notext" 
+           class="ui-btn-right">Options</a>
+		<a onclick="$.mobile.changePage($('#home'), {
+              transition: 'slide',
+              reverse: true})" 
+           data-role="button" 
+           data-icon="home" 
+           data-iconpos="notext" 
+           class="ui-btn-left"></a>
+      </header>
+	  <div class="content" data-role="content">
+         <ul id="dataHistory"></ul>
+	  </div>
+        <form type="post" onsubmit="waterScience.reSendData(); return false;">
+          <input type="submit" value="Upload"/>
+        </form>
+	  <footer data-role="footer" data-position="fixed" data-theme="b">
+	    <h1>Water SCIENCE Monitor</h1>
+	  </footer>
+	</section>
+	<!-- End: History page -->
+
+	<!-- Begin: Settings page -->
+	<section id="pageSettings" data-role="page">
+	  <header data-role="header" data-position="fixed" data-theme="b">
+	    <h1>Settings</h1>
+		<a onclick="$.mobile.changePage($('#home'), {
+              transition: 'flip',
+              reverse: true})" 
+           data-role="button" 
+           data-icon="home" 
+           data-iconpos="notext" 
+           class="ui-btn-left"></a>
+      </header>
+	  <div class="content" data-role="content">
+        <form type="post" onsubmit="waterScience.saveSettings(); return false;">
+	      <table>
+            <tr><td>Contribution Key</td><td><input type="text" id="contributionKey" value=""></td></tr>
+            <tr><td>Contribution Name</td><td><input type="text" id="contributionName" value=""></td></tr>
+            <tr><td>Project Number</td><td><input type="text" id="projectNumber" value=""></td></tr>
+          </table>
+          <input type="submit" value="Apply"/>
+        </form>
+	  </div>
+	  <footer data-role="footer" data-position="fixed" data-theme="b">
+	    <h1>Water SCIENCE Monitor</h1>
+	  </footer>
+	</section>
+	<!-- End: Preferences page -->
+	
+	<a href="#pageError" id="show-error-page" data-role="button" data-rel="dialog" data-transition="pop" style="display: none">Show error page</a>
+
+	<!-- Begin: Error page -->
+	<section id="pageError" data-role="page" data-theme="e">
+	  <header data-role="header"><h1>Water SCIENCE</h1></header>
+	  <div class="content" data-role="content">
+	  </div>
+	  <footer data-role="footer"><h1>O'Reilly <i>jQuery Mobile</i></h1></footer>
+	</section>
+	<!-- End: Error page -->
+	
+  </body>
+ 
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/fastclick/js/fastclick.js"></script>
+<script type="text/javascript" src="lib/handlebars/js/handlebars-v1.3.0.js"></script>
+
+<script type="text/javascript">
+try {
+//$( document ).ready(function() {
+//    waterScience.init();
+//});
+
+		document.addEventListener('deviceready', waterScience.init, false);
+} catch(err) {alert("HTML - "+err.message);}
+</script>
+
+</body>
+</html>
