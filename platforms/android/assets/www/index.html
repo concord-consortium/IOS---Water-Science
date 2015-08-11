@@ -12,5 +12,14 @@
   <body>
     <div id="example"></div>
     <script src="js/bundle.js"></script>
+    <script type="text/javascript" src="lib/fastclick/js/fastclick.js"></script>
+    <script>
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+          FastClick.attach(document.body);
+        }, false);
+      }
+    </script>
+    <script type="text/javascript" src="cordova.js"></script>
   </body>
 </html>
