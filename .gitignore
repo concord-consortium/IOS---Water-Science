@@ -1,2 +1,3 @@
 platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata
 platforms/ios/WaterScience.xcodeproj/project.xcworkspace/xcuserdata
+*.keystore
