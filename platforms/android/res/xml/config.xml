@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.servertechnology.waterscience" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.concord.waterscience" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
@@ -19,8 +19,8 @@
     <description>
         WaterScience application that uploads to Isense.
     </description>
-    <author email="zimmer@server-technology.com" href="http://cordova.io">
-        Server Technology
+    <author email="scytacki@concord.org" href="http://concord.org">
+        The Concord Consortium
     </author>
     <content src="index.html" />
     <access origin="*" />
